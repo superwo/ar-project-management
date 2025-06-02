@@ -77,9 +77,26 @@ export interface Team {
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
   reducerPath: "api",
-  tagTypes: [],
-  //   endpoints: (build) => ({}),
-  endpoints: () => ({}),
+  tagTypes: ["Projects", "Tags"],
+  endpoints: (build) => ({
+    getProjects: build.query<Project[], void>({
+      query: () => "projects",
+      providesTags: ["Projects"],
+    }),
+
+    createProject: build.mutation<Project, Partial<Project>>({
+      query: (project) => ({
+        url: "projects",
+        method: "POST",
+        body: project,
+      }),
+      invalidatesTags: ["Projects"],
+    }),
+
+    // getTasks: build.query<Task[], { projectId: number }>({
+    //   query: ({ projectId }) => `tasks?projectId=${projectId}`,
+    //   providesTags: (result) => result ?
+  }),
 });
 
 // export const api = createApi({
@@ -173,15 +190,15 @@ export const api = createApi({
 //   }),
 // });
 
-// export const {
-//   useGetProjectsQuery,
-//   useCreateProjectMutation,
-//   useGetTasksQuery,
-//   useCreateTaskMutation,
-//   useUpdateTaskStatusMutation,
-//   useSearchQuery,
-//   useGetUsersQuery,
-//   useGetTeamsQuery,
-//   useGetTasksByUserQuery,
-//   useGetAuthUserQuery,
-// } = api;
+export const {
+  useGetProjectsQuery,
+  useCreateProjectMutation,
+  // useGetTasksQuery,
+  // useCreateTaskMutation,
+  // useUpdateTaskStatusMutation,
+  // useSearchQuery,
+  // useGetUsersQuery,
+  // useGetTeamsQuery,
+  // useGetTasksByUserQuery,
+  // useGetAuthUserQuery,
+} = api;
