@@ -219,7 +219,7 @@ export const {
   useCreateProjectMutation,
   useGetTasksQuery,
   useCreateTaskMutation,
-  // useUpdateTaskStatusMutation,
+  useUpdateTaskStatusMutation,
   // useSearchQuery,
   // useGetUsersQuery,
   // useGetTeamsQuery,

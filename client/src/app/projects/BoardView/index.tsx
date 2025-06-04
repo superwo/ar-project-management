@@ -1,4 +1,4 @@
-import { useGetTasksQuery  } from "@/state/api";
+import { useGetTasksQuery, useUpdateTaskStatusMutation } from "@/state/api";
 import React from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -20,11 +20,11 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
     isLoading,
     error,
   } = useGetTasksQuery({ projectId: Number(id) });
-//   const [updateTaskStatus] = useUpdateTaskStatusMutation();
+  const [updateTaskStatus] = useUpdateTaskStatusMutation();
 
-//   const moveTask = (taskId: number, toStatus: string) => {
-//     updateTaskStatus({ taskId, status: toStatus });
-//   };
+  const moveTask = (taskId: number, toStatus: string) => {
+    updateTaskStatus({ taskId, status: toStatus });
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred while fetching tasks</div>;
@@ -32,7 +32,7 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
-        {/* {taskStatus.map((status) => (
+        {taskStatus.map((status) => (
           <TaskColumn
             key={status}
             status={status}
@@ -40,7 +40,7 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
             moveTask={moveTask}
             setIsModalNewTaskOpen={setIsModalNewTaskOpen}
           />
-        ))} */}
+        ))}
       </div>
     </DndProvider>
   );
